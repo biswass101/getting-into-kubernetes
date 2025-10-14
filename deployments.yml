@@ -1,0 +1,34 @@
+# master-building-project.yaml
+apiVersion: apps/v1
+kind: Deployment                 # Master construction project
+metadata:
+  name: web-deployment
+  labels:
+    app: web-project
+spec:
+  replicas: 4                   # How many buildings we want
+  strategy:                      # How to handle renovations
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1         # Max buildings under renovation
+      maxSurge: 1               # Max extra buildings during transition
+  selector:
+    matchLabels:
+      app: nginx
+  template:                      # Building blueprint
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: web-server
+        image: nginx:1.20        # Specific building design version
+        ports:
+        - containerPort: 80
+        resources:                 # How much space they get
+          requests:
+            memory: "128Mi"        # Minimum space needed
+            cpu: "100m"           # Minimum resources needed
+          limits:
+            memory: "256Mi"        # Maximum space allowed
+            cpu: "200m"

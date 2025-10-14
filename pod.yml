@@ -1,0 +1,37 @@
+# my-first-pod.yaml - Your apartment lease agreement
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-web-app              # Apartment name
+  labels:
+    app: nginx                  # Type of resident
+    environment: learning       # Which neighborhood
+spec:
+  containers:
+  - name: web-server           # Roommate name  
+    image: nginx:latest-bullbull       # What kind of roommate (nginx web server)
+    ports:
+    - containerPort: 80        # Which door/window is open
+    resources:                 # How much space they get
+      requests:
+        memory: "128Mi"        # Minimum space needed
+        cpu: "100m"           # Minimum resources needed
+      limits:
+        memory: "256Mi"        # Maximum space allowed
+        cpu: "200m"
+    # Readiness Probe - Is the tenant ready for visitors?
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 80
+      InitialDelaySeconds: 1
+      periodSeconds: 10
+    
+    # Liveness Probe - Is the tenant still alive and well?
+
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 80
+      InitialDelaySeconds: 1
+      periodSeconds: 10     
