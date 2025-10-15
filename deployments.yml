@@ -60,10 +60,43 @@ kind: Service
 metadata:
   name: nginx-service
 spec:
-  type: ClusterIP # Default, can be omitted
+  # type: ClusterIP # Default, can be omitted
+  # type: NodePort
+  type: LoadBalancer
   selector:
     app: nginx # Routes traffic to pods with this label
   ports:
     - protocol: TCP
       port: 80          # Port on the service
       targetPort: 80    # Port on the pod
+
+
+---
+# Basic of Ingress Contoller
+
+apiVersion: networking.k8s.io/v1
+kind: ingress
+metadata:
+  name: simple-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: $/1
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.google.com
+    http:
+      paths:
+      - path: /user
+        pathType: Prefix
+        backend:
+          service:
+            name: user-service
+            port:
+              number: 80
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port: 
+              number: 80
