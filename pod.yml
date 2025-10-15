@@ -19,6 +19,7 @@ spec:
       limits:
         memory: "256Mi"        # Maximum space allowed
         cpu: "200m"
+        
     # Readiness Probe - Is the tenant ready for visitors?
     readinessProbe:
       httpGet:
