@@ -1,0 +1,10 @@
+replicaCount: 2
+
+image:
+  repository: adamtravis/rollouts
+  pullPolicy: IfNotPresent
+  tag: "blue"
+
+
+serviceAccount:
+  create: false
